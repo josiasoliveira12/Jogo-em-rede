@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://drt2rqdqejvwi"]
+
+[ext_resource type="Script" uid="uid://bluq4q3xbv4qq" path="res://player_01.gd" id="1_nmkrw"]
+[ext_resource type="Texture2D" uid="uid://dle4rx8g6mdru" path="res://assets/Sprite Pack 2/1 - Onion Lad/Idle (16 x 16).png" id="1_npffi"]
+[ext_resource type="Texture2D" uid="uid://xbiud1c7p18n" path="res://assets/Sprite Pack 2/1 - Onion Lad/Run_&_Jump (16 x 16).png" id="2_nmkrw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4senm"]
+atlas = ExtResource("1_npffi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pn73u"]
+atlas = ExtResource("1_npffi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2qpn"]
+atlas = ExtResource("2_nmkrw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktjql"]
+atlas = ExtResource("2_nmkrw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q1on3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4senm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pn73u")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i2qpn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktjql")
+}],
+"loop": 1,
+"name": &"run_jump",
+"speed": 4.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3etx6"]
+height = 22.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_player01"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimatedSprite2D:animation")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+
+[node name="Player" type="CharacterBody2D" unique_id=143351236]
+position = Vector2(111, 95)
+script = ExtResource("1_nmkrw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1936452698]
+position = Vector2(2.861023e-06, 7.999998)
+scale = Vector2(2, 1.8749998)
+sprite_frames = SubResource("SpriteFrames_q1on3")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=561082165]
+position = Vector2(0, 11)
+shape = SubResource("CapsuleShape2D_3etx6")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("..")
+replication_config = SubResource("SceneReplicationConfig_player01")
